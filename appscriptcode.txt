@@ -1,0 +1,32 @@
+function onFormSubmit(e) {
+
+  const form = FormApp.getActiveForm();
+  let formResponses = form.getResponses();
+  let latestFR = formResponses[form.getResponses().length - 1];
+
+
+  const itemResponses = latestFR.getItemResponses()
+  let email = itemResponses[0].getResponse();
+  let sesi = itemResponses[1].getResponse();
+
+  let currentDate = new Date(new Date().getTime());
+
+  let id = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < 7) {
+    id += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+
+  let rep =  email;
+  let sub = '[Workshop ExMangNgoding] - ' + sesi;
+
+  let message = "Halo ! \n\nTerimakasih telah mendaftar Workshop ExMangNgoding, nomor ID Anda adalah " + id + "\n\n Silakan tunjukan email yang berisikan ID ini ke petugas workshop \n\nRegards,\nExMangNgoding"
+
+
+  GmailApp.sendEmail(rep, sub, message);
+  return ContentService.createTextOutput(JSON.stringify(response));
+
+}
